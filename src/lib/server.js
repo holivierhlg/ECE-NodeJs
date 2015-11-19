@@ -1,13 +1,13 @@
 var http = require('http');
-var users = require('./src/users.js');
+var users = require('./users.js');
 
 http.createServer(function (req, res) {
-	
-	var path = req.url.split("]").splice(1, 2)
-	
+
+	var path = req.url.split("/").splice(1, 2)
+
 	if (path[0] == "get") {
 		users.get(path[1], function (user) {
-			var response = { 
+			var response = {
 				info: "here's your user !",
 				user: user
 			}
@@ -16,7 +16,7 @@ http.createServer(function (req, res) {
 		})
 	} else if (path[0] == "save") {
 		users.save(path[1], function (user) {
-			var response = { 
+			var response = {
 				info: "user saved !",
 				user: user
 			}
