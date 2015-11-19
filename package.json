@@ -1,15 +1,17 @@
 {
-	"name": "asynchronous server technologies",
+	"name": "AST",
 	"description": "class @ ece",
 	"version": "0.0.1",
+
 	"dependencies": {
 		"mymodule": "1.2.y",
 		"mymodule": "-1.2.x",
 		"mymodule": ">=1.2.z || ",
 		"mymodule": "*"
-		"mylocalmodule": "file:./server.js"
 	},
+
 	"devDependencies": {
-		"test-module": "*"
+		"mocha": "*",
+    "should": ">= 0.0.1"
 	}
 }
