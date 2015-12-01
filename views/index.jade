@@ -1,0 +1,22 @@
+extend layout
+  block head
+    script(src="/js/jquery.2.1.4.min.js")
+    script(src="/js/bootstrap.min.js")
+    link(rel="stylesheet", href="/css/bootstrap.min.cs")
+
+  block content
+    div.container
+      div.col-md-6.col-md-offset-3
+        button.btn.btn-success Hello World
+        #content
+
+    script
+      :coffee-script
+        $('#get-metrics').click(e) ->
+          e.preventDefault()
+          $.getJSON '/metrics.json', (data) ->
+          $('#content').empty()
+          c = ""
+          for metric in data
+            c+="<p>timestamp: #{metric.timestamp}<br/>value: #{metric.value}"
+            $('#content').append c

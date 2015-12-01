@@ -1,17 +1,16 @@
 {
-	"name": "AST",
-	"description": "class @ ece",
-	"version": "0.0.1",
-
-	"dependencies": {
-		"mymodule": "1.2.y",
-		"mymodule": "-1.2.x",
-		"mymodule": ">=1.2.z || ",
-		"mymodule": "*"
-	},
-
-	"devDependencies": {
-		"mocha": "*",
-    "should": ">= 0.0.1"
-	}
+  "name": "AST",
+  "description": "class @ ece",
+  "version": "0.0.1",
+  "dependencies": {
+    "coffee-script": "^1.10.0",
+    "express": "^4.13.3",
+    "jade": "^1.11.0",
+    "mymodule": "*",
+    "nodemon": "^1.8.1"
+  },
+  "devDependencies": {
+    "coffee-script": "^1.10.0",
+    "mocha": "^2.3.4"
+  }
 }

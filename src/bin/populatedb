@@ -1,0 +1,48 @@
+#!/usr/bin/env coffee
+
+exec = require('child_process').exec
+
+metrics = require '../src/lib/metrics'
+
+exec "rm -rf #{__dirname}/../db/metrics", (err, stdout, stderr)
+  if err then throw err
+  console.log 'DB deleted'
+
+met = [
+  [
+    timestamp: new Date('2015-12-01 10:30 UTC').getTime(),
+    value: 26
+  ,
+    timestamp: new Date('2015-12-01 10:35 UTC').getTime(),
+    value: 23
+  ,
+    timestamp: new Date('2015-12-01 10:40 UTC').getTime(),
+    value: 25
+  ,
+    timestamp: new Date('2015-12-01 10:45 UTC').getTime(),
+    value: 22
+  ,
+    timestamp: new Date('2015-12-01 10:50 UTC').getTime(),
+    value: 21
+  ,
+    timestamp: new Date('2015-12-01 10:55 UTC').getTime(),
+    value: 25
+  ,
+    timestamp: new Date('2015-12-01 11:00 UTC').getTime(),
+    value: 26
+  ,
+    timestamp: new Date('2015-12-01 11:05 UTC').getTime(),
+    value: 24
+  ,
+    timestamp: new Date('2015-12-01 11:10 UTC').getTime(),
+    value: 22
+  ,
+    timestamp: new Date('2015-12-01 11:15 UTC').getTime(),
+    value: 23
+  ]
+]
+
+for metric, index in met
+  metrics.save index+1, met, (err) ->
+    if err throw err
+    console.log "Batch #{index + 1} saved!"
