@@ -1,22 +1,40 @@
 # nodemon src/app.coffee
 express = require 'express'
+morgan = require 'morgan'
+bodyparser = require 'body-parser'
+session = require 'express-station'
+LevelStore = require('level-session-store')(session)
+
 app = express()
+
+user = require '/user'
 
 app.set 'port', 1889
 app.set 'views', "#{__dirname}/../../views"
 app.set 'view engine', 'jade'
-app.use '/', express.static "#{__dirname}/public"
-app.use require('body-parser')()
+app.use bodyparser.json()
+app.use bodyparser.urlencoded()
+app.use '/', express.static "#{__dirname}/../../public"
 
-app.get '/', (req, res) ->
-  res.render 'index',
+app.use session
+  secret: 'MyAppSecret'
+  store: new LevelStore './db/sessions'
+  resave: true
+  saveUnitialized : true
+
+authCheck = (req, res, next) ->
+  unless req.session.loggedIn == true
+    res.redirect '/login'
+  else
+    next()
+
+app.get '/', authCheck, (req, res) ->
+  res.render 'index', name: req.session.username
     locals:
       title: 'My ECE test page'
 
 app.get '/metrics.json', (req, res) ->
   res.status(200).JSON metrics.get()
-# app.get '/login'
-# app.get '/metrics'
 
 app.get '/hello/:name', (req, res) ->
  res.status(200).send req.params.name
