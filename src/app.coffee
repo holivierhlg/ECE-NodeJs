@@ -10,11 +10,11 @@ app = express()
 #user = require 'user'
 
 app.set 'port', 1889
-app.set 'views', "#{__dirname}/../../views"
+app.set 'views', "#{__dirname}/../views"
 app.set 'view engine', 'jade'
 app.use bodyparser.json()
 app.use bodyparser.urlencoded()
-app.use '/', express.static "#{__dirname}/../../public"
+app.use '/', express.static "#{__dirname}/../public"
 
 app.use session
   secret: 'MyAppSecret'

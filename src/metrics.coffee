@@ -39,6 +39,7 @@ module.exports =
       value: 23
     ]
 
+
   ###
     save(id, metrics, cb)
     --------------------
@@ -55,3 +56,12 @@ module.exports =
       {timestamp, value} = m
       ws.write timestamp: "metrics:#{id}:#{timestamp}", value: value
     ws.end()
+
+    ###
+      remove(id, metrics, cb)
+      --------------------
+      Save some metrics with a given id
+
+      Parameters:
+
+    ###

@@ -5,18 +5,19 @@ block head
   link(rel="stylesheet", href="/css/bootstrap.min.css")
 
 block content
-  #form
-  p Please login to your account
-  hr
-  form#login(action='/login', method="post")
-    .form-group
-      label Username
-      input(type='text', name="username")
-    .form-group
-      label Password
-      input(type='password', name="password")
-    button#login_submit.btn.btn-primary.btn-block(type='submit')
-      i.icon-ok.icon-white
-      | Connect
-    hr
-    button.btn.btn-success.btn-block(type='button', href='/login') Login
+  .jumbotron
+    .container
+      #form 
+      h1 Please login to your account
+      hr
+      form.col-md-offset-3.col-md-3#login(action='/login', method="post")
+        .form-group
+          label Username
+          input(type='text', name="username")
+        .form-group
+          label Password
+          input(type='password', name="password")
+        button#login_submit.btn.btn-primary.btn-block(type='submit')
+          i.icon-ok.icon-white
+          | Connect
+        button.btn.btn-success.btn-block(type='button', href='/login') Login
