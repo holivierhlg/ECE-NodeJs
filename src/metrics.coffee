@@ -55,12 +55,13 @@ module.exports =
     for m in metrics
       {timestamp, value} = m
       ws.write timestamp: "metrics:#{id}:#{timestamp}", value: value
+    console.log "Batch saved !"
     ws.end()
 
     ###
       remove(id, metrics, cb)
       --------------------
-      Save some metrics with a given id
+      Remove some metrics with a given id
 
       Parameters:
 

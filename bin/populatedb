@@ -2,11 +2,14 @@
 
 exec = require('child_process').exec
 
-metrics = require '../src/lib/metrics'
+#exec "rm -rf #{__dirname}/../db/metrics && mkdir #{__dirname}/../db/metrics", (err, stdout, stderr) ->
+  #if err then throw err
 
-exec "rm -rf #{__dirname}/../db/metrics", (err, stdout, stderr)
-  if err then throw err
-  console.log 'DB deleted'
+# Require after rm and mkdir or DB is deleted once in callback
+metrics = require '../src/metrics'
+user = require '../src/user'
+console.log 'DB deleted'
+console.log 'Creating metrics'
 
 met = [
   [
@@ -24,7 +27,8 @@ met = [
   ,
     timestamp: new Date('2015-12-01 10:50 UTC').getTime(),
     value: 21
-  ,
+  ],
+  [
     timestamp: new Date('2015-12-01 10:55 UTC').getTime(),
     value: 25
   ,
@@ -43,6 +47,29 @@ met = [
 ]
 
 for metric, index in met
-  metrics.save index+1, met, (err) ->
-    if err throw err
-    console.log "Batch #{index + 1} saved!"
+  console.log "Saving batch #{index + 1}"
+  metrics.save index + 1, metric, (err) ->
+    return err if err
+
+console.log 'Creating users'
+
+initialUsers = [
+  [
+    username: "test1",
+    name: "test1",
+    password: "test1",
+    email: "test1@test.com"
+  ],
+  [
+    username: "test2",
+    name: "test2",
+    password: "test2",
+    email: "test2@test.com"
+  ]
+]
+
+#(username, password, name, email, callback)
+for initialUser, index in initialUsers
+  console.log "Saving users #{index + 1}"
+  user.save initialUser.username, initialUser.name, initialUser.password, initialUser.email, (err) ->
+    return err if err
