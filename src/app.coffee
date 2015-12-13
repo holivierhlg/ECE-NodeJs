@@ -6,8 +6,8 @@ session = require 'express-session'
 LevelStore = require('level-session-store')(session)
 
 app = express()
-
-#user = require 'user'
+metrics = require './metrics'
+user = require './user'
 
 app.set 'port', 1889
 app.set 'views', "#{__dirname}/../views"
@@ -34,11 +34,14 @@ app.get '/', authCheck, (req, res) ->
       title: 'My ECE test page'
 
 app.get '/login', (req, res)->
+  console.log "attempting to get login"
   res.render 'login'
 
-app.post 'login', (req, res) ->
+app.post '/login', (req, res) ->
+  console.log req.body.username
   user.get req.body.username, (err, data) ->
     console.log req.body.password == data.password
+    console.log data
     if err then throw error
     unless req.body.password == data.password
       res.redirect '/login'
