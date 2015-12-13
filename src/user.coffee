@@ -21,8 +21,10 @@ module.exports =
 
 
   save: (username, password, name, email, callback) ->
+
+
     ws = db.createWriteStream()
-    ws.write user:"#{username}", value:"#{name}:#{password}:#{email}"
+    ws.write({user:"#{username}", value:"#{name}:#{password}:#{email}"})
     console.log "User saved !"
 
     ws.on 'error', callback
