@@ -2,19 +2,16 @@ db = require('./db') "#{__dirname}/../db/user"
 
 module.exports =
   get: (username, callback) ->
-    user = {}
+    user = null
     rs = db.createReadStream
       gte: "user:#{username}"
       lte: "user:#{username}"
     rs.on 'data', (data) ->
-      console.log(data.key, '=', data.value)
-      console.log "user:#{username}"
-      [_, _username] = data.key.split ':' # key: user : #{username}
-      [_password, _name, _email] = data.key.split ':' # value: name : password : email
-      username = _username
-      name = _name
-      password = _password
-      email = _email
+      key = data.key.split ":"
+      value = data.value.split ":"
+      user = {username : key[1], name : value[1], password : value[2], email : value[3]}
+      return user
+      
     rs.on 'error', callback
     rs.on 'close', ->
       callback null, user
@@ -24,7 +21,7 @@ module.exports =
 
 
     ws = db.createWriteStream()
-    ws.write({user:"#{username}", value:"#{name}:#{password}:#{email}"})
+    ws.write key: "user:#{username}", value:"user:#{name}:#{password}:#{email}"
     console.log "User saved !"
 
     ws.on 'error', callback

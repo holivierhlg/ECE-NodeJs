@@ -54,18 +54,18 @@ for metric, index in met
 console.log 'Creating users'
 
 initialUsers = [
-  [
+  {
     username: "test1",
     name: "test1",
     password: "test1",
     email: "test1"
-  ],
-  [
+  },
+  {
     username: "test2",
     name: "test2",
     password: "test2",
     email: "test2"
-  ]
+  }
 ]
 
 #(username, password, name, email, callback)
