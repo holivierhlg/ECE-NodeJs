@@ -11,7 +11,7 @@ block content
 
     script
       :coffee-script
-        $('#get-metrics').click (e) ->
+        $('#get-metrics').one 'click', (e) ->
           e.preventDefault()
           $.getJSON '/metrics.json', (metrics) ->
             $('#content').empty()
