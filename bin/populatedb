@@ -65,6 +65,18 @@ initialUsers = [
     name: "test2",
     password: "test2",
     email: "test2"
+  },
+  {
+    username: "holivier",
+    name: "Olivier Hamoud",
+    password: "ohlg",
+    email: "olivier.hamoud-le-guellec@edu.ece.fr"
+  },
+  {
+    username: "nico",
+    name: "Nicolas Griere",
+    password: "nico",
+    email: "griere@ece.fr"
   }
 ]
 
