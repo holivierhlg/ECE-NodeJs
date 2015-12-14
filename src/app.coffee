@@ -51,7 +51,7 @@ app.post '/login', (req, res) ->
       req.session.username = req.body.username
       res.redirect '/'
 
-app.get '/signup', (req, res)->
+app.get '/signup', (req, res) ->
   res.render 'signup'
 
 app.post '/signup', (req, res) ->
@@ -59,6 +59,12 @@ app.post '/signup', (req, res) ->
     if err then throw error
     else
       res.redirect '/login'
+
+app.get '/logout', (req, res) ->
+  console.log "logging out"
+  delete req.session.loggedIn
+  delete req.session.username
+  res.redirect '/login'
 
 app.get '/metrics.json', (req, res) ->
   metrics.get req.session.username, (err, data) ->
