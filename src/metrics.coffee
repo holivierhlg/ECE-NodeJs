@@ -33,6 +33,14 @@ module.exports =
     console.log "Batch saved !"
     ws.end()
 
+  saveNew: (user, timestamp, value, callback)->
+    ws = db.createWriteStream()
+    ws.on 'error', callback
+    ws.on 'close', callback
+    ws.write key: "metrics:#{user}:34", value: "metrics:#{timestamp}:#{value}"
+    console.log "New user metric saved !"
+    ws.end()
+
     ###
       remove(id, metrics, cb)
       --------------------

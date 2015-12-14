@@ -1,0 +1,19 @@
+extend layout
+
+block content
+  .jumbotron
+    .container
+      #form 
+      h1 Enter details on new metric
+      hr
+      form.col-md-offset-3.col-md-9#login(action='/addMetric', method="post")
+        .form-group
+          label.col-md-2 Timestamp
+          input.col-md-offset-2(type='date', name="timestamp")
+        .form-group
+          label.col-md-2  Value
+          input.col-md-offset-2(type='text', name="value")
+        .form-group.col-md-3
+          button#login_submit.btn.btn-primary.btn-block(type='submit')
+            i.icon-ok.icon-white
+            | Submit

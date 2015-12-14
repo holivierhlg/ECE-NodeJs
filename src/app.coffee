@@ -66,6 +66,15 @@ app.get '/logout', (req, res) ->
   delete req.session.username
   res.redirect '/login'
 
+app.get '/addMetric', (req, res) ->
+  res.render 'addMetric'
+
+app.post '/addMetric', (req, res) ->
+  metrics.saveNew req.session.username, req.body.timestamp, req.body.value, (err, data) ->
+    if err then throw error
+    else
+      res.redirect '/'
+
 app.get '/metrics.json', (req, res) ->
   metrics.get req.session.username, (err, data) ->
     res.status(200).json data
