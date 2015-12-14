@@ -7,12 +7,12 @@ block head
   link(rel="stylesheet", href="/css/bootstrap.min.css")
 
 
-  block content
+block content
   button.btn.btn-danger(href='/logout' onClick='document.location.href')
     div.container
       div.col-md-6.col-md-offset-3
-      p Hello World ! #{name}
-        button.btn.btn-success#get-metrics Hello World
+        p Hello World ! #{name}
+          button.btn.btn-success#get-metrics Hello World
 
         #metrics
 
@@ -21,8 +21,8 @@ block head
         $('#get-metrics').click (e) ->
           e.preventDefault()
           $.getJSON '/metrics.json', (metrics) ->
-          $('#content').empty()
-          c = ""
-          for metric in metrics
-            c+="<p>timestamp: #{metric.timestamp}<br/>value: #{metric.value}"
+            $('#content').empty()
+            c = ""
+            for metric in metrics
+              c+="<p>timestamp: #{metric.timestamp}<br/>value: #{metric.value}"
             $('#metrics').append c
