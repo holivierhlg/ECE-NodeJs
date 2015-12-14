@@ -55,14 +55,10 @@ app.get '/signup', (req, res)->
   res.render 'signup'
 
 app.post '/signup', (req, res) ->
-  user.save req.body.username, req.body.password, req.body.email, req.body.name
-  if err then throw error
-  unless req.body.password == data.password
-    res.redirect '/signup'
-  else
-    req.session.loggedIn =true
-    req.session.username = req.body.username
-    res.redirect '/'
+  user.save req.body.username, req.body.name, req.body.password, req.body.email, (err, data) ->
+    if err then throw error
+    else
+      res.redirect '/login'
 
 app.get '/metrics.json', (req, res) ->
   metrics.get req.session.username, (err, data) ->

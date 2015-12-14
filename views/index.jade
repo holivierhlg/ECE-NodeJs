@@ -1,13 +1,5 @@
 extend layout
-
-block head
-  script(src="/js/jquery.2.1.4.min.js")
-  script(src="/js/d3.min.js")
-  script(src="/js/bootstrap.min.js")
-  link(rel="stylesheet", href="/css/bootstrap.min.css")
-
-
-  block content
+block content
   button.btn.btn-danger(href='/logout' onClick='document.location.href')
     div.container
       div.col-md-6.col-md-offset-3

@@ -2,7 +2,10 @@ doctype html
 head
   title #{title}
   block head
-  //- here goes CSS and JS
+    script(src="/js/jquery.2.1.4.min.js")
+    script(src="/js/d3.min.js")
+    script(src="/js/bootstrap.min.js")
+    link(rel="stylesheet", href="/css/bootstrap.min.css")
 
   block content
     p

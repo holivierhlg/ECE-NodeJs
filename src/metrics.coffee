@@ -12,7 +12,7 @@ module.exports =
     metric = []
     rs = db.createReadStream
       gte: "metrics:#{username}:1"
-      lte: "metrics:#{username}:99999999999999999999999999999999999999999999"
+      lte: "metrics:#{username}:999999999999"
     rs.on 'data', (data) ->
       value = data.value.split ":"
       metric.push(timestamp: value[1], value: value[2])

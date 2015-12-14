@@ -1,0 +1,28 @@
+extend layout
+
+block content
+  .jumbotron
+    .container
+      #form 
+      h1 Please enter account information
+      hr
+      form.col-md-offset-3.col-md-4#login(action='/signup', method="post")
+        .form-group
+          label.col-md-6 Username
+          input.col-md-6(type='text', name="username")
+        br
+        .form-group
+          label.col-md-6 Name
+          input.col-md-6(type='text', name="name")
+        br
+        .form-group
+          label.col-md-6 Password
+          input.col-md-6(type='password', name="password")
+        br
+        .form-group
+          label.col-md-6 E-mail
+          input.col-md-6(type='text', name="name")
+        br
+        button#register_submit.btn.btn-primary.btn-block(type='submit')
+          i.icon-ok.icon-white
+          | Register

@@ -11,15 +11,11 @@ module.exports =
       value = data.value.split ":"
       user = {username : key[1], name : value[1], password : value[2], email : value[3]}
       return user
-
     rs.on 'error', callback
     rs.on 'close', ->
       callback null, user
 
-
   save: (username, name, password, email, callback) ->
-
-
     ws = db.createWriteStream()
     ws.write key: "user:#{username}", value:"user:#{name}:#{password}:#{email}"
     console.log "User saved !"
