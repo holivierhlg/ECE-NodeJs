@@ -15,7 +15,7 @@ module.exports =
       lte: "metrics:#{username}:999999999999"
     rs.on 'data', (data) ->
       value = data.value.split ":"
-      metric.push(timestamp: value[1], value: value[2])
+      metric.push(timestamp: parseInt(value[1]), value: parseInt(value[2]))
       return metric
 
     rs.on 'error', callback
