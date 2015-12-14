@@ -29,9 +29,9 @@ authCheck = (req, res, next) ->
     next()
 
 app.get '/', authCheck, (req, res) ->
-  res.render 'index', name: req.session.username
-    locals:
-      title: 'My ECE test page'
+  res.render 'index'
+    ,name: "#{req.session.username}"
+      ,title: 'My ECE test page'
 
 app.get '/login', (req, res)->
   console.log "attempting to get login"
