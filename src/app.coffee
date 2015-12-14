@@ -33,6 +33,7 @@ app.get '/', authCheck, (req, res) ->
     ,name: "#{req.session.username}"
       ,title: 'My ECE test page'
 
+
 app.get '/login', (req, res)->
   console.log "attempting to get login"
   res.render 'login'
@@ -64,7 +65,8 @@ app.post '/signup', (req, res) ->
     res.redirect '/'
 
 app.get '/metrics.json', (req, res) ->
-  res.status(200).JSON metrics.get()
+  metrics.get req.session.username, (err, data) ->
+    res.status(200).json data
 
 app.get '/hello/:name', (req, res) ->
  res.status(200).send req.params.name

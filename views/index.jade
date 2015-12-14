@@ -2,6 +2,7 @@ extend layout
 
 block head
   script(src="/js/jquery.2.1.4.min.js")
+  script(src="/js/d3.min.js")
   script(src="/js/bootstrap.min.js")
   link(rel="stylesheet", href="/css/bootstrap.min.css")
 
@@ -11,16 +12,17 @@ block head
     div.container
       div.col-md-6.col-md-offset-3
       p Hello World ! #{name}
-        button.btn.btn-success Hello World
+        button.btn.btn-success#get-metrics Hello World
+
         #metrics
 
     script
       :coffee-script
-        $('#get-metrics').click(e) ->
+        $('#get-metrics').click (e) ->
           e.preventDefault()
-          $.getJSON '/metrics.json', (data) ->
+          $.getJSON '/metrics.json', (metrics) ->
           $('#content').empty()
           c = ""
-          for metric in data
+          for metric in metrics
             c+="<p>timestamp: #{metric.timestamp}<br/>value: #{metric.value}"
             $('#metrics').append c

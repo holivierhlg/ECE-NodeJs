@@ -1,60 +1,35 @@
 db = require('./db') "#{__dirname}/../db/metrics"
 
+
 module.exports =
   ###
     get()
     -----
     Returns some hard coded metrics
   ###
-  get: () ->
-    return [
-      timestamp: new Date('2015-12-01 10:30 UTC').getTime(),
-      value: 26
-    ,
-      timestamp: new Date('2015-12-01 10:35 UTC').getTime(),
-      value: 23
-    ,
-      timestamp: new Date('2015-12-01 10:40 UTC').getTime(),
-      value: 25
-    ,
-      timestamp: new Date('2015-12-01 10:45 UTC').getTime(),
-      value: 22
-    ,
-      timestamp: new Date('2015-12-01 10:50 UTC').getTime(),
-      value: 21
-    ,
-      timestamp: new Date('2015-12-01 10:55 UTC').getTime(),
-      value: 25
-    ,
-      timestamp: new Date('2015-12-01 11:00 UTC').getTime(),
-      value: 26
-    ,
-      timestamp: new Date('2015-12-01 11:05 UTC').getTime(),
-      value: 24
-    ,
-      timestamp: new Date('2015-12-01 11:10 UTC').getTime(),
-      value: 22
-    ,
-      timestamp: new Date('2015-12-01 11:15 UTC').getTime(),
-      value: 23
-    ]
+  get: (username, callback) ->
+    metrics = []
+    metric = []
+    rs = db.createReadStream
+      gte: "metrics:#{username}:1"
+      lte: "metrics:#{username}:99999999999999999999999999999999999999999999"
+    rs.on 'data', (data) ->
+      value = data.value.split ":"
+      metric.push(timestamp: value[1], value: value[2])
+      return metric
 
+    rs.on 'error', callback
 
-  ###
-    save(id, metrics, cb)
-    --------------------
-    Save some metrics with a given id
+    rs.on 'close', ->
+      callback null, metric
 
-    Parameters:
-
-  ###
-  save: (id, metrics, callback)->
+  save: (user, m, callback)->
     ws = db.createWriteStream()
     ws.on 'error', callback
     ws.on 'close', callback
-    for m in metrics
-      {timestamp, value} = m
-      ws.write timestamp: "metrics:#{id}:#{timestamp}", value: value
+    for metric, index in m
+      {timestamp, value} = metric
+      ws.write key: "metrics:#{user}:#{index+1}", value: "metrics:#{timestamp}:#{value}"
     console.log "Batch saved !"
     ws.end()
 

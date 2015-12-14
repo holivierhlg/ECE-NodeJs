@@ -2,8 +2,11 @@
 
 exec = require('child_process').exec
 
-#exec "rm -rf #{__dirname}/../db/metrics && mkdir #{__dirname}/../db/metrics", (err, stdout, stderr) ->
-  #if err then throw err
+exec "rm -rf #{__dirname}/../db/metrics && mkdir #{__dirname}/../db/metrics", (err, stdout, stderr) ->
+  if err then throw err
+
+exec "rm -rf #{__dirname}/../db/user && mkdir #{__dirname}/../db/user", (err, stdout, stderr) ->
+  if err then throw err
 
 # Require after rm and mkdir or DB is deleted once in callback
 metrics = require '../src/metrics'
@@ -28,43 +31,64 @@ console.log 'Creating metrics'
 # ]
 
 met = [
-  [
-    timestamp: new Date('2015-12-01 10:30 UTC').getTime(),
-    value: 26
-  ,
-    timestamp: new Date('2015-12-01 10:35 UTC').getTime(),
-    value: 23
-  ,
-    timestamp: new Date('2015-12-01 10:40 UTC').getTime(),
-    value: 25
-  ,
-    timestamp: new Date('2015-12-01 10:45 UTC').getTime(),
-    value: 22
-  ,
-    timestamp: new Date('2015-12-01 10:50 UTC').getTime(),
-    value: 21
-  ],
-  [
-    timestamp: new Date('2015-12-01 10:55 UTC').getTime(),
-    value: 25
-  ,
-    timestamp: new Date('2015-12-01 11:00 UTC').getTime(),
-    value: 26
-  ,
-    timestamp: new Date('2015-12-01 11:05 UTC').getTime(),
-    value: 24
-  ,
-    timestamp: new Date('2015-12-01 11:10 UTC').getTime(),
-    value: 22
-  ,
-    timestamp: new Date('2015-12-01 11:15 UTC').getTime(),
-    value: 23
-  ]
+  {
+    user: "test1"
+    m:
+      [
+          {
+            timestamp: new Date('2015-12-01 10:35 UTC').getTime(),
+            value: 24
+          },
+          {
+            timestamp: new Date('2015-12-01 10:40 UTC').getTime(),
+            value: 26
+          },
+          {
+            timestamp: new Date('2015-12-01 10:45 UTC').getTime(),
+            value: 27
+          }
+      ]
+  },
+  {
+    user: "holivier"
+    m:
+      [
+          {
+            timestamp: new Date('2015-12-01 10:35 UTC').getTime(),
+            value: 24
+          },
+          {
+            timestamp: new Date('2015-12-01 10:40 UTC').getTime(),
+            value: 26
+          },
+          {
+            timestamp: new Date('2015-12-01 10:45 UTC').getTime(),
+            value: 27
+          }
+      ]
+  },
+  {
+    user: "test2"
+    m:
+      [
+          {
+            timestamp: new Date('2015-12-01 10:35 UTC').getTime(),
+            value: 24
+          },
+          {
+            timestamp: new Date('2015-12-01 10:40 UTC').getTime(),
+            value: 26
+          },
+          {
+            timestamp: new Date('2015-12-01 10:45 UTC').getTime(),
+            value: 27
+          }
+      ]
+  }
 ]
-
 for metric, index in met
   console.log "Saving batch #{index + 1}"
-  metrics.save index + 1, metric, (err) ->
+  metrics.save metric.user,metric.m, (err) ->
     return err if err
 
 console.log 'Creating users'
