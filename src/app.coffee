@@ -1,6 +1,7 @@
 # nodemon src/app.coffee
 express = require 'express'
 morgan = require 'morgan'
+moment = require 'moment'
 bodyparser = require 'body-parser'
 session = require 'express-session'
 LevelStore = require('level-session-store')(session)

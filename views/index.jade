@@ -23,37 +23,43 @@ block content
           $.getJSON '/metrics.json', (metrics) ->
             $('#content').empty()
             c = "<h1>Your Personal Metrics</h1><br/>"
-            data = []
+            timestamp = []
+            value = []
             for metric in metrics
               c+="<p>timestamp: #{metric.timestamp}<br/>value: #{metric.value}"
-              data.push parseInt("#{metric.value}")
-            showGraph data
+              value.push parseInt("#{metric.value}")
+              timestamp.push parseInt("#{metric.timestamp}")
+            showGraph timestamp, value
             $('#metrics').append c
-            
-        showGraph = (data) ->
+
+        showGraph = (timestamp, value) ->
           $('#graph.aGraph').append "<h1>Metrics Summary</h1>"
           margins = [80, 80, 80, 80]
           width = 1000 - (margins[1]) - (margins[3])
           height = 400 - (margins[0]) - (margins[2])
-          
+
           # Define x and y axis
-          x = d3.scale.linear().domain([0, data.length]).range([0, width])
-          y = d3.scale.linear().domain([0, d3.max(data)]).range([height, 0])
+          x = d3.scale.linear().domain([0, value.length]).range([0, width])
+          y = d3.scale.linear().domain([d3.min(value), d3.max(value)]).range([height, 0])
 
           # create a line function that can convert data[] into x and y points
-          line = d3.svg.line().x((d, i) ->
-            x i
-          ).y((d) ->
-            y d
-          )
-          
+          line = d3.svg.line()
+          .x((d, i) ->
+            x i)
+          .y((d) ->
+            y d)
+
+          formatTimestamp = (d) ->
+            t = new moment( timestamp[d] )
+            formatted = t.subtract(10, 'days').calendar()
+            return formatted
+
           graph = d3.select('#graph').append('svg:svg').attr('width', width + margins[1] + margins[3]).attr('height', height + margins[0] + margins[2]).append('svg:g').attr('transform', 'translate(' + margins[3] + ',' + margins[0] + ')')
 
-          xAxis = d3.svg.axis().scale(x).tickSize(-height).tickSubdivide(true)
+          xAxis = d3.svg.axis().scale(x).tickSize(-height).tickFormat(formatTimestamp).tickSubdivide(true)
           graph.append('svg:g').attr('class', 'x axis').attr('transform', 'translate(0,' + height + ')').call xAxis
 
-          yAxisLeft = d3.svg.axis().scale(y).ticks(4).orient('left')
+          yAxisLeft = d3.svg.axis().scale(y).ticks(6).orient('left')
           graph.append('svg:g').attr('class', 'y axis').attr('transform', 'translate(-25,0)').call yAxisLeft
 
-          graph.append('svg:path').attr 'd', line(data)
-            
+          graph.append('svg:path').attr 'd', line(value, timestamp)
