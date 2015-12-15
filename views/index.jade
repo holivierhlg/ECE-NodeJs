@@ -31,13 +31,13 @@ block content
               timestamps.push parseInt("#{metric.timestamp}")
             showGraph values, timestamps
             $('#metrics').append c
-            
+
         showGraph = (values, timestamps) ->
           $('#graph.aGraph').append "<h1>Metrics Summary</h1>"
           margins = [80, 80, 80, 80]
           width = 1000 - (margins[1]) - (margins[3])
           height = 400 - (margins[0]) - (margins[2])
-          
+
           # Define x and y axis
           x = d3.scale.linear().domain([0, values.length]).range([0, width])
           y = d3.scale.linear().domain([0, d3.max(values)]).range([height, 0])
@@ -60,13 +60,11 @@ block content
             hours = date.getHours()
             minutes = '0' + date.getMinutes()
             return formattedTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes.substr(-2) + ' UTC'
-            
-          
+                
           xAxis = d3.svg.axis().scale(x).tickFormat(formatTimestamp).tickSize(-height).tickSubdivide(true)
           graph.append('svg:g').attr('class', 'x axis').attr('transform', 'translate(0,' + height + ')').call xAxis
 
-          yAxisLeft = d3.svg.axis().scale(y).ticks(4).orient('left')
+          yAxisLeft = d3.svg.axis().scale(y).ticks(6).orient('left')
           graph.append('svg:g').attr('class', 'y axis').attr('transform', 'translate(-25,0)').call yAxisLeft
-
+          
           graph.append('svg:path').attr 'd', line(values)
-            

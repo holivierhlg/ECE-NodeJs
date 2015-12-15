@@ -34,12 +34,16 @@ module.exports =
     ws.end()
 
   saveNew: (user, timestamp, value, callback)->
-    ws = db.createWriteStream()
-    ws.on 'error', callback
-    ws.on 'close', callback
-    ws.write key: "metrics:#{user}:34", value: "metrics:#{timestamp}:#{value}"
-    console.log "New user metric saved !"
-    ws.end()
+
+    this.get user, (err, data) ->
+      console.log data.length+1
+      ws = db.createWriteStream()
+      ws.on 'error', callback
+      ws.on 'close', callback
+      ws.write key: "metrics:#{user}:#{data.length+1}", value: "metrics:#{timestamp}:#{value}"
+      console.log "New user metric saved !"
+      ws.end()
+
 
     ###
       remove(id, metrics, cb)
