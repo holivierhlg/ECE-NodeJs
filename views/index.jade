@@ -23,24 +23,26 @@ block content
           $.getJSON '/metrics.json', (metrics) ->
             $('#content').empty()
             c = "<h1>Your Personal Metrics</h1><br/>"
-            data = []
+            values = []
+            timestamps = []
             for metric in metrics
               c+="<p>timestamp: #{metric.timestamp}<br/>value: #{metric.value}"
-              data.push parseInt("#{metric.value}")
-            showGraph data
+              values.push parseInt("#{metric.value}")
+              timestamps.push parseInt("#{metric.timestamp}")
+            showGraph values, timestamps
             $('#metrics').append c
             
-        showGraph = (data) ->
+        showGraph = (values, timestamps) ->
           $('#graph.aGraph').append "<h1>Metrics Summary</h1>"
           margins = [80, 80, 80, 80]
           width = 1000 - (margins[1]) - (margins[3])
           height = 400 - (margins[0]) - (margins[2])
           
           # Define x and y axis
-          x = d3.scale.linear().domain([0, data.length]).range([0, width])
-          y = d3.scale.linear().domain([0, d3.max(data)]).range([height, 0])
+          x = d3.scale.linear().domain([0, values.length]).range([0, width])
+          y = d3.scale.linear().domain([0, d3.max(values)]).range([height, 0])
 
-          # create a line function that can convert data[] into x and y points
+          # create a line function that can convert values[] into x and y points
           line = d3.svg.line().x((d, i) ->
             x i
           ).y((d) ->
@@ -49,11 +51,22 @@ block content
           
           graph = d3.select('#graph').append('svg:svg').attr('width', width + margins[1] + margins[3]).attr('height', height + margins[0] + margins[2]).append('svg:g').attr('transform', 'translate(' + margins[3] + ',' + margins[0] + ')')
 
-          xAxis = d3.svg.axis().scale(x).tickSize(-height).tickSubdivide(true)
+          # Display time in format 2015-12-01 10:35 UTC
+          formatTimestamp = (d) ->
+            date = new Date(timestamps[d])
+            year = date.getFullYear()
+            month = date.getMonth()+1
+            day = date.getDate()
+            hours = date.getHours()
+            minutes = '0' + date.getMinutes()
+            return formattedTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes.substr(-2) + ' UTC'
+            
+          
+          xAxis = d3.svg.axis().scale(x).tickFormat(formatTimestamp).tickSize(-height).tickSubdivide(true)
           graph.append('svg:g').attr('class', 'x axis').attr('transform', 'translate(0,' + height + ')').call xAxis
 
           yAxisLeft = d3.svg.axis().scale(y).ticks(4).orient('left')
           graph.append('svg:g').attr('class', 'y axis').attr('transform', 'translate(-25,0)').call yAxisLeft
 
-          graph.append('svg:path').attr 'd', line(data)
+          graph.append('svg:path').attr 'd', line(values)
             
