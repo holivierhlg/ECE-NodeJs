@@ -34,9 +34,8 @@ module.exports =
     ws.end()
 
   saveNew: (user, timestamp, value, callback)->
-
     this.get user, (err, data) ->
-      console.log data.length+1
+      console.log value
       ws = db.createWriteStream()
       ws.on 'error', callback
       ws.on 'close', callback

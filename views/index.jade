@@ -22,13 +22,14 @@ block content
           e.preventDefault()
           $.getJSON '/metrics.json', (metrics) ->
             $('#content').empty()
-            c = "<h1>Your Personal Metrics</h1><br/>"
+            c = "<h1>Your Personal Metrics</h1><br/><table class='table table-striped'><tr class='info'><th>Timestamp</th><th>Value</th></tr>"
             values = []
             timestamps = []
             for metric in metrics
-              c+="<p>timestamp: #{metric.timestamp}<br/>value: #{metric.value}"
+              c+="<tr><td>#{metric.timestamp}</td><td>#{metric.value}</td></tr>"
               values.push parseInt("#{metric.value}")
               timestamps.push parseInt("#{metric.timestamp}")
+            c+="</table>"
             showGraph values, timestamps
             $('#metrics').append c
 
@@ -53,18 +54,22 @@ block content
 
           # Display time in format 2015-12-01 10:35 UTC
           formatTimestamp = (d) ->
-            date = new Date(timestamps[d])
-            year = date.getFullYear()
-            month = date.getMonth()+1
-            day = date.getDate()
-            hours = date.getHours()
-            minutes = '0' + date.getMinutes()
-            return formattedTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes.substr(-2) + ' UTC'
-                
-          xAxis = d3.svg.axis().scale(x).tickFormat(formatTimestamp).tickSize(-height).tickSubdivide(true)
+            if timestamps[d]?
+              date = new Date(timestamps[d])
+              year = date.getFullYear()
+              month = date.getMonth()+1
+              day = date.getDate()
+              hours = date.getHours()
+              minutes = '0' + date.getMinutes()
+              return formattedTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes.substr(-2) + ' UTC'
+            else
+              return ''
+
+
+          xAxis = d3.svg.axis().scale(x).ticks(timestamps.length).outerTickSize(0).tickFormat(formatTimestamp).tickSize(-height).tickSubdivide(true)
           graph.append('svg:g').attr('class', 'x axis').attr('transform', 'translate(0,' + height + ')').call xAxis
 
           yAxisLeft = d3.svg.axis().scale(y).ticks(6).orient('left')
-          graph.append('svg:g').attr('class', 'y axis').attr('transform', 'translate(-25,0)').call yAxisLeft
+          graph.append('svg:g').attr('class', 'y axis').attr('transform', 'translate(-25,-5)').call yAxisLeft
           
           graph.append('svg:path').attr 'd', line(values)
