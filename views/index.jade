@@ -32,7 +32,7 @@ block content
         $('#get-metrics').one 'click', (e) ->
           e.preventDefault()
           $.getJSON '/metrics.json', (metrics) ->
-            $('#content').empty()
+            
             c = "<h1>Your Personal Metrics</h1><br/><table class='table table-striped'><tr class='info'><th>Timestamp</th><th>Value</th></tr>"
             values = []
             timestamps = []
