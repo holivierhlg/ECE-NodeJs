@@ -1,6 +1,15 @@
 db = require('./db') "#{__dirname}/../db/user"
 
 module.exports =
+  ###
+    get()
+    -----
+    Retrieve a specific use
+
+    Parameters
+    `username` Name of user to retrieve
+    `callback` Contains an err if any
+  ###
   get: (username, callback) ->
     user = null
     rs = db.createReadStream
@@ -15,6 +24,18 @@ module.exports =
     rs.on 'close', ->
       callback null, user
 
+  ###
+    save()
+    -----
+    Save a new user
+
+    Parameters
+    `username` username of user to save
+    `name` name of user to save
+    `password` password of user to save
+    `email` email of user to save
+    `callback` Contains an err if any
+  ###
   save: (username, name, password, email, callback) ->
     ws = db.createWriteStream()
     ws.write key: "user:#{username}", value:"user:#{name}:#{password}:#{email}"

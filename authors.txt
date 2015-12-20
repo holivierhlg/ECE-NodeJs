@@ -1,0 +1,6 @@
+Authors:
+Nicolas Griere
+Olivier Hamoud Le Guellec
+
+Github repo:
+https://github.com/holivierhlg/ECE-NodeJs.git
