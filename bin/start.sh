@@ -1,1 +1,1 @@
-node ../lib/server.js
+coffee src/app.coffee
