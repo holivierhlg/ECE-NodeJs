@@ -22,6 +22,11 @@ At root of project type in following command:
 ```
 coffee src/app.coffee
 ```
+### SASS deamon
+A css file has already been generated from the .scss SASS file. However, if you want to enable the deamon, you can use the following in your console :
+```
+npm run watch-css
+```
 ## Documentation
 A number of different tehnologies were used on this project. Below are useful links that provide access to their documentation:
 
@@ -29,7 +34,7 @@ A number of different tehnologies were used on this project. Below are useful li
 - [Coffee-script documentation](http://coffeescript.org/) - Language that compiles into Javascript, improves developer productivity
 - [JQuery documentation](http://code.jquery.com) - JavaScript library
 - [Jade documentation](http://jade-lang.com/) - Write clean HTML
-- [Stylus documentation](https://learnboost.github.io/stylus/) - Write clean CSS
+- [Sass documentation](http://sass-lang.com/documentation/file.SASS_REFERENCE.html) - Write clean CSS
 - [D3.JS documentation](http://d3js.org/) - Data Driven Documents, used for metrics' graphs
 - [Bootstrap documentation](http://getbootstrap.com/) - Front-end web development framework
 - [LevelDB documentation](https://github.com/google/leveldb) -LevelDB is a fast key-value storage library written at Google that provides an ordered mapping from string keys to string values. Used for Storage.
