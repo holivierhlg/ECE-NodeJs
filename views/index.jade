@@ -14,17 +14,16 @@ block content
           td
             a(class='btn btn-danger', href='/logout') Logout
 
-    #content
-      h2 #{name}'s metrics
-      div.col-md-4
+    h2 #{name}'s metrics
+    div.col-md-4
 
-        form#addMetric(action='/addMetric', method="get")
-          .form-group.col-md-4
-            button.btn.btn-info(type='submit') Add Metric
-        button.btn.btn-success.col-md-4#get-metrics Show Metrics
-      br
-      #graph.aGraph
-      #metrics
+      form#addMetric(action='/addMetric', method="get")
+        .form-group.col-md-4
+          button.btn.btn-info(type='submit') Add Metric
+      button.btn.btn-success.col-md-4#get-metrics Show Metrics
+    br
+    #graph.aGraph
+    #metrics
 
 
     script
