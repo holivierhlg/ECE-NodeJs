@@ -1,26 +1,49 @@
-path {
-				stroke: steelblue;
-				stroke-width: 1;
-				fill: none;
-			}
-
-			.axis {
-			  shape-rendering: crispEdges;
-			}
-
-			.x.axis line {
-			  stroke: lightgrey;
-			}
-
-			.x.axis .minor {
-			  stroke-opacity: .5;
-			}
-
-			.x.axis path {
-			  display: none;
-			}
-
-			.y.axis line, .y.axis path {
-			  fill: none;
-			  stroke: #000;
-			}
+html {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  border: none; }
+  html body {
+    background: #fff;
+    margin: 0;
+    padding: 0;
+    border: none; }
+    html body #title {
+      position: absolute;
+      background: linear-gradient(#e4e4e4, #ffffff);
+      width: 100%;
+      height: 70px;
+      text-align: center; }
+    html body #menu {
+      margin-top: 100px; }
+      html body #menu table {
+        width: 100%;
+        border-style: solid;
+        border-color: #ACACAC;
+        border-width: 2px; }
+        html body #menu table tr td {
+          padding: 5px 5px 5px 5px;
+          width: 33%;
+          border-style: solid;
+          border-color: #ACACAC;
+          border-width: 2px;
+          text-align: center; }
+        html body #menu table form {
+          float: right; }
+    html body #form {
+      width: 90%;
+      margin: 0 auto;
+      padding-top: 100px; }
+      html body #form .form-group label, html body #form .form-group input {
+        display: inline-block; }
+      html body #form .form-group label + input {
+        width: 30%;
+        margin: 0 30% 0 4%; }
+      html body #form .form-group label {
+        width: 30%;
+        text-align: right; }
+      html body #form .form-group input + input {
+        float: right; }
+    html body #content {
+      margin-top: 100px; }

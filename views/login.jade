@@ -1,23 +1,25 @@
 extend layout
 
 block content
-  .jumbotron
-    .container
-      #form 
-      h1 Please login to your account
+  .container-fluid
+    #title
+      h1 Welcome to MetricsManager 1.0
+
+    #form
+      h2 Please login to your account
       hr
-      form.col-md-offset-3.col-md-9#login(action='/login', method="post")
+      form.col-md-offset-2.col-md-8#login(action='/login', method="post")
         .form-group
           label Username
           input(type='text', name="username")
         .form-group
           label Password
           input(type='password', name="password")
-        .form-group.col-md-3
+        .form-group.col-md-offset-3.col-md-3
           button#login_submit.btn.btn-primary.btn-block(type='submit')
             i.icon-ok.icon-white
             | Login
       br
-      form.col-md-offset-3.col-md-9#signup(action='/signup', method="get")
-        .form-group.col-md-3
+      form.col-md-offset-2.col-md-8#signup(action='/signup', method="get")
+        .form-group.col-md-offset-3.col-md-3
           button.btn.btn-success.btn-block(type='submit') Sign Up !

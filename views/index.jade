@@ -1,19 +1,30 @@
 extend layout
 
 block content
-  div.container
-    h1 Hello #{name} !
-    div.col-md-4
-      form#logout(action='/logout', method="get")
-        .form-group.col-md-4
-          button.btn.btn-danger(type='submit') Log out
-      form#addMetric(action='/addMetric', method="get")
-        .form-group.col-md-4
-          button.btn.btn-info(type='submit') Add Metric
-      button.btn.btn-success.col-md-4#get-metrics Show Metrics
-    br
-    #graph.aGraph
-    #metrics
+  .container-fluid
+    #title
+      h1 Welcome to MetricsManager 1.0
+
+    #menu
+      table
+        tr
+          td
+            a(class='btn btn-info', href='./') Home
+          td Hello, #{name}, you are connected to your personal account.
+          td
+            a(class='btn btn-danger', href='/logout') Logout
+
+    #content
+      h2 #{name}'s metrics
+      div.col-md-4
+
+        form#addMetric(action='/addMetric', method="get")
+          .form-group.col-md-4
+            button.btn.btn-info(type='submit') Add Metric
+        button.btn.btn-success.col-md-4#get-metrics Show Metrics
+      br
+      #graph.aGraph
+      #metrics
 
 
     script
@@ -49,7 +60,7 @@ block content
           ).y((d) ->
             y d
           )
-          
+
           graph = d3.select('#graph').append('svg:svg').attr('width', width + margins[1] + margins[3]).attr('height', height + margins[0] + margins[2]).append('svg:g').attr('transform', 'translate(' + margins[3] + ',' + margins[0] + ')')
 
           # Display time in format 2015-12-01 10:35 UTC
@@ -71,5 +82,5 @@ block content
 
           yAxisLeft = d3.svg.axis().scale(y).ticks(6).orient('left')
           graph.append('svg:g').attr('class', 'y axis').attr('transform', 'translate(-25,-5)').call yAxisLeft
-          
+
           graph.append('svg:path').attr 'd', line(values)

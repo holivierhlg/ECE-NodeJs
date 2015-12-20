@@ -5,6 +5,8 @@ bodyparser = require 'body-parser'
 session = require 'express-session'
 LevelStore = require('level-session-store')(session)
 
+
+
 app = express()
 metrics = require './metrics'
 user = require './user'
@@ -68,6 +70,7 @@ app.get '/logout', (req, res) ->
 
 app.get '/addMetric', (req, res) ->
   res.render 'addMetric'
+    ,name: "#{req.session.username}"
 
 app.post '/addMetric', (req, res) ->
   metrics.saveNew req.session.username, req.body.timestamp, req.body.value, (err, data) ->
