@@ -36,7 +36,14 @@ block content
             values = []
             timestamps = []
             for metric in metrics
-              c+="<tr><td>#{metric.timestamp}</td><td>#{metric.value}</td></tr>"
+              date = new Date(metric.timestamp)
+              year = date.getFullYear()
+              month = date.getMonth()+1
+              day = date.getDate()
+              hours = date.getHours()
+              minutes = '0' + date.getMinutes()
+              formattedTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes.substr(-2) + ' UTC'
+              c+="<tr><td>#{formattedTime}</td><td>#{metric.value}</td></tr>"
               values.push parseInt("#{metric.value}")
               timestamps.push parseInt("#{metric.timestamp}")
             c+="</table>"
