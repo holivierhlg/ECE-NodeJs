@@ -2,33 +2,17 @@
 
 exec = require('child_process').exec
 
-#exec "rm -rf #{__dirname}/../db/metrics && mkdir #{__dirname}/../db/metrics", (err, stdout, stderr) ->
-#  if err then throw err
+exec "rm -rf #{__dirname}/../db/metrics && mkdir #{__dirname}/../db/metrics", (err, stdout, stderr) ->
+  if err then throw err
 
-#exec "rm -rf #{__dirname}/../db/user && mkdir #{__dirname}/../db/user", (err, stdout, stderr) ->
-#  if err then throw err
+exec "rm -rf #{__dirname}/../db/user && mkdir #{__dirname}/../db/user", (err, stdout, stderr) ->
+  if err then throw err
 
 # Require after rm and mkdir or DB is deleted once in callback
 metrics = require '../src/metrics'
 user = require '../src/user'
 console.log 'DB deleted'
 console.log 'Creating metrics'
-
-# met = [
-#   {
-#     username: "test1",
-#     [
-#       {
-#       timestamp: new Date('2015-12-01 10:30 UTC').getTime(),
-#       value: 26
-#       },
-#       {
-#       timestamp: new Date('2015-12-01 10:35 UTC').getTime(),
-#       value: 23
-#       }
-#     ]
-#   }
-# ]
 
 met = [
   {
